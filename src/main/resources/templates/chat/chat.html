@@ -51,7 +51,7 @@
 
     <div>
         <th:block th:with="pinfo=${#authentication.principal}">
-            <input type="hidden" id="chat_user_id" th:value="${pinfo.userId}"/>
+            <input type="hidden" id="chatUserId" th:value="${pinfo.userId}"/>
         </th:block>
         <div class="app-wrapp" style="left: -5px">
             <div class="app-container">
@@ -160,14 +160,14 @@
                                                     <span>
                                                         <i class="material-icons">account_circle</i>
                                                     </span>
-                                                    <input type="text" name="chat_profile_id" placeholder="아이디" value=""
+                                                    <input type="text" name="chatProfileId" placeholder="아이디" value=""
                                                            disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <span>
                                                         <i class="material-icons">person_pin</i>
                                                     </span>
-                                                    <input type="text" name="chat_profile_name_input" placeholder="이름"
+                                                    <input type="text" name="chatProfileNameInput" placeholder="이름"
                                                            value="" disabled>
                                                 </div>
                                                 <div class="form-group h-80">
@@ -188,14 +188,14 @@
                                                     <span>
                                                         <i class="material-icons">contact_mail</i>
                                                     </span>
-                                                    <input type="text" name="chat_profile_email" placeholder="이메일"
+                                                    <input type="text" name="chatProfileEmail" placeholder="이메일"
                                                            value="" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <span>
                                                         <i class="material-icons">contact_phone</i>
                                                     </span>
-                                                    <input type="text" name="chat_profile_phone" placeholder="전화번호"
+                                                    <input type="text" name="chatProfilePhone" placeholder="전화번호"
                                                            value="" disabled>
                                                 </div>
                                             </div>
@@ -489,6 +489,10 @@
             let token = $("meta[name='_csrf']").attr("content");
             let header = $("meta[name='_csrf_header']").attr("content");
 
+            let chatUserId = $("#chatUserId").val();
+
+            console.log(chatUserId);
+
             /**
              * 2024-06-14, SSE 채팅방 리스트 새로고침
              */
@@ -624,7 +628,7 @@
                                 output += "        &nbsp;&nbsp;" + getDayStr(d.timeStamp) + "&nbsp;&nbsp;";
                                 output += "    </span>";
                                 output += "</h5>";
-                            } else if (d.senderId === $("#chat_user_id").val()) {
+                            } else if (d.senderId === chatUserId) {
                                 output = "";
                                 output += "<li class='sent'>";
                                 output += "    <div>";
@@ -796,7 +800,6 @@
 
                 var type = $(this).find('input[name=chat_room_type]').val();
                 var chatRoomNum = '';
-                var chatUserId = '';
 
                 console.log('show message');
                 //console.log(this);
@@ -804,13 +807,11 @@
 
                 if (type === 'p2p') { // 1대1 채팅방으로 접속 시
                     var chatCounterpartId = $(this).find('input[name=chat_counterpart_id]').val();
-                    chatUserId = $("#chat_user_id").val();
                     isp2pChatRoom(chatCounterpartId, chatUserId, type);
                     chatRoomNum = messageRoomNum.val();
                     //console.log(chatCounterpartId);
                 } else { // 채팅방 목록에서 접속 시
                     chatRoomNum = $(this).find('input[name=chat_room_num]').val();
-                    chatUserId = $("#chat_user_id").val();
                     messageRoomNum.val(chatRoomNum); // 해당 방의 번호를 기억해놓습니다.
                     //console.log(chatRoomNum);
                 }
@@ -865,7 +866,7 @@
                     url: "/chat/getChatRoomInfo",
                     data: {
                         "chatRoomNum": chatRoomNum,
-                        "chatUserId": $("#chat_user_id").val()
+                        "chatUserId": chatUserId
                     },
                     dataType: "json",
                     beforeSend: function (xhr) {
@@ -1026,7 +1027,7 @@
                                         output += "</h5>";
 
                                         $("#chat-message-list").append(output);
-                                    } else if (d.sessionId === $("#chat_user_id").val()) {
+                                    } else if (d.sessionId === chatUserId) {
                                         output = "";
                                         output += "<li class='sent'>";
                                         output += "    <div>";
@@ -1065,7 +1066,7 @@
                                     }
                                 }
                             } else if (d.type === "message") { // 나의 메시지
-                                if (d.sessionId === $("#chat_user_id").val()) {
+                                if (d.sessionId === chatUserId) {
                                     output = "";
                                     output += "<li class='sent goto'>";
                                     output += "    <div>";
@@ -1111,7 +1112,7 @@
                                     }, 50);
                                 }
                             } else if (d.type === "emergency") { // 나의 메시지
-                                if (d.sessionId === $("#chat_user_id").val()) {
+                                if (d.sessionId === chatUserId) {
                                     output = "";
                                     output += "<li class='sent goto'>";
                                     output += "    <div>";
@@ -1162,7 +1163,7 @@
                                 }
                             } else if (d.type === "imgurl") {
                                 //파일 업로드한 경우 업로드한 파일을 채팅방에 뿌려준다.
-                                if (d.sessionId === $("#chat_user_id").val()) {
+                                if (d.sessionId === chatUserId) {
                                     output = "";
                                     output += "<li class='sent goto'>";
                                     output += "    <div>";
@@ -1240,8 +1241,7 @@
                 }
 
                 let messageRoomNum = $('input[name="message_room_num"]');
-                let chatUserId = $("#chat_user_id");
-                initChatRoomVisitTime(messageRoomNum.val(), chatUserId.val()); // 채팅방 방문 시간 업데이트
+                initChatRoomVisitTime(messageRoomNum.val(), chatUserId); // 채팅방 방문 시간 업데이트
                 getChatUserList();
                 getChatUserProfile();
 
@@ -1277,7 +1277,6 @@
             function sendMassage() {
                 //console.log('sendMessage');
                 var message = $('input[name=message-text]').val();
-                var chatUserId = $("#chat_user_id").val();
 
                 if (message === '') {
                     const Toast = Swal.mixin({
@@ -1358,7 +1357,7 @@
                         file: file,
                         fileName: file.name,
                         roomNumber: messageRoomNum.val(),
-                        chatUserId: $("#chat_user_id").val(),
+                        chatUserId: chatUserId,
                         msg: ''
                     }
 
@@ -1565,7 +1564,7 @@
                     'type': 'chat-invite',
                     'name': '채팅방 초대',
                     'userButton': '초대',
-                    'chatUserId': $("#chat_user_id").val(),
+                    'chatUserId': chatUserId,
                     'chatRoomNum': $("input[name='message_room_num']").val()
                 };
                 chatRoomMgrAjax('/chat/chatUserInviteView', data, function (html) {
@@ -1580,7 +1579,7 @@
                     'type': 'chat-mgr',
                     'name': '채팅방 관리',
                     'userButton': '추방',
-                    'chatUserId': $("#chat_user_id").val(),
+                    'chatUserId': chatUserId,
                     'chatRoomNum': $("input[name='message_room_num']").val()
                 };
                 chatRoomMgrAjax('/chat/chatUserMgrView', data, function (html) {
@@ -1594,7 +1593,7 @@
                     'type': 'room-create',
                     'name': '대화상대 선택',
                     'roomButton': '방 초대',
-                    'chatUserId': $("#chat_user_id").val()
+                    'chatUserId': chatUserId
                 };
                 chatRoomMgrAjax('/chat/chatRoomCreateView', data, function (html) {
                     chatRoomMgrDisplay(html);
@@ -1607,7 +1606,7 @@
                     'type': 'room-exit',
                     'name': '채팅방 나가기',
                     'roomButton': '방 나가기',
-                    'chatUserId': $("#chat_user_id").val()
+                    'chatUserId': chatUserId
                 };
                 chatRoomMgrAjax('/chat/chatRoomExitView', data, function (html) {
                     chatRoomMgrDisplay(html);
@@ -1773,7 +1772,7 @@
                     type: "post",
                     url: "/chat/chatUserProfile",
                     data: {
-                        "chatUserId": $("#chat_user_id").val()
+                        "chatUserId": chatUserId
                     },
                     dataType: "json",
                     beforeSend: function (xhr) {
@@ -1792,11 +1791,11 @@
                         var $chatProfilePicture = $('.chat-profile-image');
                         var $chatProfileName = $('.chat-profile-name');
                         var $chatProfileDept = $('.chat-profile-dept');
-                        var $chatProfileId = $('input[name="chat_profile_id"]');
-                        var $chatProfileNameInput = $('input[name="chat_profile_name_input"]');
+                        var $chatProfileId = $('input[name="chatProfileId"]');
+                        var $chatProfileNameInput = $('input[name="chatProfileNameInput"]');
                         var $chatProfileStatusMsg = $('#chat-profile-status-msg');
-                        var $chatProfileEmail = $('input[name="chat_profile_email"]');
-                        var $chatProfilePhone = $('input[name="chat_profile_phone"]');
+                        var $chatProfileEmail = $('input[name="chatProfileEmail"]');
+                        var $chatProfilePhone = $('input[name="chatProfilePhone"]');
 
                         var $chatNavProfileName = $('.nav-profile-h1');
                         var $chatNavProfilePicture = $('.nav-profile-image');
@@ -1832,7 +1831,7 @@
                     type: "post",
                     url: "/chat/chatUserList",
                     data: {
-                        "chatUserId": $("#chat_user_id").val()
+                        "chatUserId": chatUserId
                     },
                     dataType: "json",
                     beforeSend: function (xhr) {
@@ -1894,7 +1893,7 @@
                     type: "post",
                     url: "/chat/userChatRoomList",
                     data: {
-                        "chatManagerId": $("#chat_user_id").val()
+                        "chatManagerId": chatUserId
                     },
                     dataType: "json",
                     beforeSend: function (xhr) {
@@ -1982,7 +1981,7 @@
                     type: "post",
                     url: "/chat/chatUserProfileMsg",
                     data: {
-                        "chatUserId": $("#chat_user_id").val(),
+                        "chatUserId": chatUserId,
                         "profileStatusMsg": statusMsg
                     },
                     beforeSend: function (xhr) {
@@ -2135,7 +2134,7 @@
                                     output += "        &nbsp;&nbsp;" + getDayStr(d.timeStamp) + "&nbsp;&nbsp;";
                                     output += "    </span>";
                                     output += "</h5>";
-                            } else if (d.senderId === $("#chat_user_id").val()) {
+                            } else if (d.senderId === chatUserId) {
                                 output = "";
                                 output += "<li class='sent'>";
                                 output += "    <div>";
@@ -2213,7 +2212,7 @@
                     url: "/chat/emergency",
                     data: {
                         "chatRoomNum": messageRoomNum.val(),
-                        "senderId":  $("#chat_user_id").val(),
+                        "senderId":  chatUserId,
                         "messageContent": chatEmergencyContentVal
                     },
                     beforeSend: function (xhr) {

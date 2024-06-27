@@ -69,8 +69,8 @@ public class ChatService {
          */
         chatMessage.setTimeStamp(dao.getLastDay(chatMessage).getTimeStamp());
 
-        List<ChatMessage> chatMessageList = dao.redisSearchMessages(chatMessage).stream()
-        .map(chatMsg -> {
+        List<ChatMessage> chatMessageList = dao.redisSearchMessages(chatMessage)
+        .stream().map(chatMsg -> {
             if (chatMsg.getUserId() == null && chatMsg.getUsername() == null) {
                 chatMsg.setType(ChatMessage.MessageType.TIMESTAMP);
             }
@@ -170,8 +170,8 @@ public class ChatService {
         /**
          * 2024-06-18, 채팅 기록 검색
          */
-        List<ChatMessage> chatMessageList = dao.searchChatMessages(chatMessage).stream()
-        .map(chatMsg -> {
+        List<ChatMessage> chatMessageList = dao.searchChatMessages(chatMessage)
+        .stream().map(chatMsg -> {
             if (chatMsg.getUserId() == null && chatMsg.getUsername() == null) {
                 chatMsg.setType(ChatMessage.MessageType.TIMESTAMP);
             }
