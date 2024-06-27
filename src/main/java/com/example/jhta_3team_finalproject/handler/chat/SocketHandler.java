@@ -107,7 +107,7 @@ public class SocketHandler extends TextWebSocketHandler {
         obj.put("sessionId", chatMessage.getSenderId());
         obj.put("readCount", chatMessage.getReadCount());
         obj.put("sendTime", chatMessage.getSendTime().getTime());
-        obj.put("userName", chatMessage.getUsername());
+        obj.put("userName", chatMessage.getUserName());
         obj.put("userProfileImage", chatMessage.getUserProfilePicture());
 
         if(chatMessage != null) {
@@ -167,7 +167,7 @@ public class SocketHandler extends TextWebSocketHandler {
         obj.put("sessionId", chatMessage.getSenderId());
         obj.put("readCount", 1);
         obj.put("sendTime", chatMessage.getSendTime().getTime());
-        obj.put("userName", chatMessage.getUsername());
+        obj.put("userName", chatMessage.getUserName());
         obj.put("userProfileImage", chatMessage.getUserProfilePicture());
 
         HashMap<String, Object> temp = new HashMap<String, Object>();
@@ -309,7 +309,7 @@ public class SocketHandler extends TextWebSocketHandler {
                 obj.put("msg", chatMessage.getMessageContent());
                 obj.put("sendTime", chatMessage.getSendTime().getTime());
                 obj.put("readCount", chatMessage.getReadCount());
-                obj.put("userName", chatMessage.getUsername());
+                obj.put("userName", chatMessage.getUserName());
                 obj.put("userProfileImage", chatMessage.getUserProfilePicture());
                 webSocketSession.sendMessage(new TextMessage(obj.toJSONString())); //초기화된 버퍼를 발송한다.
             } catch (IOException e) {
@@ -371,7 +371,7 @@ public class SocketHandler extends TextWebSocketHandler {
             String fileUrl = chatMessageList.get(i).getFileUrl();
             int readCount = chatMessageList.get(i).getReadCount();
             Date sendTime = chatMessageList.get(i).getSendTime();
-            String userName = chatMessageList.get(i).getUsername();
+            String userName = chatMessageList.get(i).getUserName();
             String userProfileImage = chatMessageList.get(i).getUserProfilePicture();
 
             log.info("{}", session.getId());

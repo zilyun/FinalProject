@@ -8,6 +8,7 @@ import com.example.jhta_3team_finalproject.domain.chat.ChatMessage;
 import com.example.jhta_3team_finalproject.domain.chat.ChatParticipate;
 import com.example.jhta_3team_finalproject.domain.chat.ChatRoom;
 import com.example.jhta_3team_finalproject.mybatis.mapper.chat.ChatMapper;
+//import com.example.jhta_3team_finalproject.repository.chat.ChatMessageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,7 @@ public class ChatService {
     private final ChatMapper dao;
     private final RedisChatUtils redisChatUtils;
     private final ChatSseService chatSseService;
+    //private final ChatMessageRepository chatMessageRepository;
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     LocalTime localTime = LocalTime.of(0, 0, 0);
@@ -71,7 +73,7 @@ public class ChatService {
 
         List<ChatMessage> chatMessageList = dao.redisSearchMessages(chatMessage)
         .stream().map(chatMsg -> {
-            if (chatMsg.getUserId() == null && chatMsg.getUsername() == null) {
+            if (chatMsg.getUserId() == null && chatMsg.getUserName() == null) {
                 chatMsg.setType(ChatMessage.MessageType.TIMESTAMP);
             }
             return chatMsg;
@@ -169,10 +171,19 @@ public class ChatService {
     public List<ChatMessage> searchChatMessages(ChatMessage chatMessage) throws Exception {
         /**
          * 2024-06-18, 채팅 기록 검색
+         * 2024-06-27, 채팅 Full Text Index 처리 -> JPA 적용
          */
+//        List<ChatMessage> chatMessageList = chatMessageRepository.searchChatMessages(chatMessage)
+//        .stream().map(chatMsg -> {
+//            if (chatMsg.getUserId() == null && chatMsg.getUserName() == null) {
+//                chatMsg.setType(ChatMessage.MessageType.TIMESTAMP);
+//            }
+//            return chatMsg;
+//        }).collect(Collectors.toList());
+
         List<ChatMessage> chatMessageList = dao.searchChatMessages(chatMessage)
         .stream().map(chatMsg -> {
-            if (chatMsg.getUserId() == null && chatMsg.getUsername() == null) {
+            if (chatMsg.getUserId() == null && chatMsg.getUserName() == null) {
                 chatMsg.setType(ChatMessage.MessageType.TIMESTAMP);
             }
             return chatMsg;
@@ -254,9 +265,9 @@ public class ChatService {
              */
             String roomName = "";
             User user = dao.chatUserProfile(chatCounterpartId);
-            roomName += user.getUsername();
+            roomName += user.getUserName();
             user = dao.chatUserProfile(chatUserId);
-            roomName += ", " + user.getUsername();
+            roomName += ", " + user.getUserName();
             ChatRoom chatRoom = new ChatRoom();
             chatRoom.setRoomName(roomName);
             chatRoom.setChatManagerId(chatUserId);

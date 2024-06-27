@@ -40,7 +40,7 @@ public class RedisService {
             String key = num + ":" + timeStamp;
             List<ChatMessage> oneDayList = getChatMessageList(num, key, timeStamp);
             oneDayList.forEach(chatMsg -> {
-                if(chatMsg.getUserId() == null && chatMsg.getUsername() == null) {
+                if(chatMsg.getUserId() == null && chatMsg.getUserName() == null) {
                     chatMsg.setType(ChatMessage.MessageType.TIMESTAMP);
                 }
                 oneWeekTotalList.add(chatMsg);

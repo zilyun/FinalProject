@@ -120,7 +120,7 @@
 <!--                                <img :src="`${member.user_profile_picture}`" class="rounded-full" width="36px" style="height: 36px;"/>-->
                             </div>
                             <div th:if="${type == 'room-create'}">
-                                <p class="font-medium text-gray-900" x-text="member.username"></p>
+                                <p class="font-medium text-gray-900" x-text="member.userName"></p>
                                 <p class="text-xs text-gray-400">
                                     <span class="inline-block mr-2" x-text="member.userId"></span>
                                 </p>
@@ -256,7 +256,7 @@
                         return this.myForData;
                     }
                     return this.myForData.filter((item) => {
-                        return item.username
+                        return item.userName
                             .toLowerCase()
                             .includes(this.search.toLowerCase());
                     });

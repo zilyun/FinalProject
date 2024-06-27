@@ -24,8 +24,8 @@ public class ChatMessage {
         ENTER, TALK, QUIT, KICK, EMERGENCY, TIMESTAMP
     }
 
-    private MessageType type; // 메시지 타입
     private long messageNum; // 메시지 번호
+    private MessageType type; // 메시지 타입
     private String messageContent; // 메시지 내용
     private int readCount; // 안 읽은 사람 수
     private Date sendTime; // 메시지 보낸 시간
@@ -40,6 +40,6 @@ public class ChatMessage {
      * 2024-06-14, 확장 - 유저 이름, 유저 프로필 사진
      */
     private String userId;
-    private String username;
+    private String userName;
     private String userProfilePicture;
 }
