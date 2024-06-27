@@ -1,5 +1,6 @@
 package com.example.jhta_3team_finalproject.service.customer;
 
+import com.example.jhta_3team_finalproject.domain.chat.ChatMessage;
 import com.example.jhta_3team_finalproject.domain.inquery.InqueryBoard;
 import com.example.jhta_3team_finalproject.mybatis.mapper.customer.InqueryBoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class InqueryServiceImpl implements InqueryService {
@@ -32,31 +34,26 @@ public class InqueryServiceImpl implements InqueryService {
     }
 
     @Override
-    //@Cacheable(value = "inqueryBoardPage")
+    @Cacheable(value = "inqueryBoardPage")
     public List<InqueryBoard> getBoardList(int page, int limit) {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
-        //Oracle
-        //int startrow = (page - 1) * limit + 1;
-        //int endrow = startrow + limit - 1;
-        //Mysql
+        HashMap<String, Integer> map = new HashMap<>();
         int startrow = (page - 1) * limit;
         int endrow = startrow + limit;
         map.put("start", startrow);
         map.put("end", endrow);
 
-        List<InqueryBoard> templist = dao.getBoardList(map);
-        List<InqueryBoard> list = new ArrayList<>();
-
         // 2024-04-04 글 비밀번호가 null이 아니면 true, 아니면 false
-        templist.forEach(inqueryBoard -> {
+        List<InqueryBoard> inqueryBoardList = dao.getBoardList(map)
+        .stream().map(inqueryBoard -> {
             if (inqueryBoard.getInqPass() == null) {
                 inqueryBoard.setInqPassExist(false);
             } else {
                 inqueryBoard.setInqPassExist(!(inqueryBoard.getInqPass().isEmpty()));
             }
-            list.add(inqueryBoard);
-        });
-        return list;
+            return inqueryBoard;
+        }).collect(Collectors.toList());
+
+        return inqueryBoardList;
     }
 
     @Override

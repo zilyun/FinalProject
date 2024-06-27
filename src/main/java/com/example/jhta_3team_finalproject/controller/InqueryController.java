@@ -26,11 +26,6 @@ import java.util.*;
 @Slf4j
 public class InqueryController {
 
-//    @Value("${inquery.savefolder}")
-//    private String saveFolder;
-
-    //private static final Logger log = LoggerFactory.getLogger(InqueryController.class);
-
     private InqueryService inqueryService;
 
     private InqCommentService inqCommentService;

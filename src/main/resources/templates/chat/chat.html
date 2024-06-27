@@ -491,8 +491,6 @@
 
             let chatUserId = $("#chatUserId").val();
 
-            console.log(chatUserId);
-
             /**
              * 2024-06-14, SSE 채팅방 리스트 새로고침
              */
@@ -619,6 +617,35 @@
                                 profileImage += "        <span class='user-avatar offline small'>";
                                 profileImage += "            <img style='width:40px; height: 40px; border-radius: 50%;' src='/image/chat/default.png' />";
                                 profileImage += "        </span>"
+                            }
+
+                            if (d.fileUrl != null) {
+                                //console.log(d.fileUrl);
+                                var url;
+                                //url = "<img class='msgImg' style='width: 120px;' src='" + d.fileUrl + "'>"; // 이전
+
+                                /**
+                                 * 2024-06-16, 다운로드 이미지 UI 추가
+                                 */
+                                url = "<div class='group relative my-2.5'>";
+                                url += "    <div class='absolute w-full h-full bg-gray-900/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-center justify-center'>";
+                                url += "        <a href='" + d.fileUrl + "' download='" + d.fileOriginName + "' target='_blank' rel='noopener noreferrer'>";
+                                url += "            <button data-tooltip-target='download-image' class='download-image-button inline-flex items-center justify-center ";
+                                url += "                rounded-full h-10 w-10 bg-white/30 hover:bg-white/50 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50'>";
+                                url += "                <svg class='w-5 h-5 text-white' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 18'>";
+                                url += "                    <path stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' ";
+                                url += "                        d='M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3' />";
+                                url += "                </svg>";
+                                url += "            </button>";
+                                url += "        </a>";
+                                url += "        <div id='download-image' role='tooltip' class='absolute z-10 invisible inline-block px-3 py-2 ";
+                                url += "            text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700'>";
+                                url += "            Download image";
+                                url += "            <div class='tooltip-arrow' data-popper-arrow></div>";
+                                url += "        </div>";
+                                url += "    </div>";
+                                url += "    <img class='download-image rounded-lg' style='width: 120px;' src='" + d.fileUrl + "' alt='" + d.fileOriginName + "' />";
+                                url += "</div>";
                             }
 
                             if (d.type != null) {

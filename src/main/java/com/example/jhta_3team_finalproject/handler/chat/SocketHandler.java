@@ -81,9 +81,9 @@ public class SocketHandler extends TextWebSocketHandler {
         String fileName = (String) obj.get("fileName"); // 파일의 원본 이름
 
         log.info("{}", roomNum);
-        log.info(content);
-        log.info(chatUserId);
-        log.info(fileName);
+        log.info("{}", content);
+        log.info("{}", chatUserId);
+        log.info("{}", fileName);
 
         // 상태를 저장하기 위해 vo에 값을 넣어주고 insert
         ChatMessage chatMessage = new ChatMessage();
@@ -91,6 +91,7 @@ public class SocketHandler extends TextWebSocketHandler {
         chatMessage.setSenderId(chatUserId);
         chatMessage.setMessageContent(content);
         chatMessage.setReadCount(1);
+
         /**
          * 2024-06-04, URL 을 변경해줄 때 업데이트 해주기 위해 임시 URL 지정
          */
@@ -99,8 +100,8 @@ public class SocketHandler extends TextWebSocketHandler {
             s3url = String.valueOf(random.nextLong());
             chatMessage.setFileUrl(s3url);
         }
-        chatMessage.setFileOriginName(fileName);
 
+        chatMessage.setFileOriginName(fileName);
         chatMessage = chatService.createMessage(chatMessage);
 
         obj.put("sessionId", chatMessage.getSenderId());
@@ -164,7 +165,6 @@ public class SocketHandler extends TextWebSocketHandler {
         obj.put("roomNumber", chatMessage.getChatRoomNum());
         obj.put("msg", chatMessage.getMessageContent());
         obj.put("sessionId", chatMessage.getSenderId());
-
         obj.put("readCount", 1);
         obj.put("sendTime", chatMessage.getSendTime().getTime());
         obj.put("userName", chatMessage.getUsername());
@@ -277,7 +277,9 @@ public class SocketHandler extends TextWebSocketHandler {
              * 2024-06-04 임시 URL을 S3 버킷이 관리하는 파일 URL로 변경
              */
             imageurl = amazonS3Client.getUrl(S3Bucket, originalName).toString(); // aws s3 저장된 이미지 불러오기
-            log.info("imageurl : {}", imageurl);
+
+            log.info("{}", imageurl);
+
             chatMessage.setFileUrl(s3url);
             chatMessage.setS3url(imageurl);
 
@@ -330,18 +332,14 @@ public class SocketHandler extends TextWebSocketHandler {
         sessionId = buffer.split("&")[1];
         String type = buffer.split("&")[2];
 
-        log.info("{} : 방번호 ", roomNumber);
+        log.info("{} : 방번호  ", roomNumber);
         log.info("{} : 유저아이디", sessionId);
 
         // 방번호를 기준으로 다 받아온다.
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setChatRoomNum(Long.valueOf(roomNumber));
-        log.info("{}", chatMessage);
-        log.info("{}", chatMessage.getChatRoomNum());
         chatMessageList = redisService.getRedisChatMessage(chatMessage);
         //chatMessageList = chattingService.searchMessages(chatMessage);
-
-        log.info("{} : 입니다.", chatMessageList);
 
         int idx = rls.size(); // 방의 사이즈를 조사한다.
         if (rls.size() > 0) {
@@ -376,14 +374,14 @@ public class SocketHandler extends TextWebSocketHandler {
             String userName = chatMessageList.get(i).getUsername();
             String userProfileImage = chatMessageList.get(i).getUserProfilePicture();
 
-            log.info("{} 번째", i);
+            log.info("{}", session.getId());
+            log.info("{}", session);
+
             // 세션등록이 끝나면 발급받은 세션 ID 값의 메시지를 발송한다.
             JSONObject obj = new JSONObject();
-            log.info(session.getId());
-            log.info("{}", session);
+            //obj.put(session.getId(),session); // 활성화하면 새로고침 시 소켓이 종료되면서 같은 세션 값을 가지고 있던 obj들이 제거되었었음.
             obj.put("type", "getId");
             obj.put("messageNum", messageNum);
-            //obj.put(session.getId(),session); // 활성화하면 새로고침 시 소켓이 종료되면서 같은 세션 값을 가지고 있던 obj들이 제거되었었음.
             obj.put("sessionId", senderId); // 유저 아이디임. // 위를 활성화하면 세션과 관련된 obj들이 제거되면서 이 컬럼과 js 조건문이 만나는 조건에서 의도치 않은 결과가 나왔었음.
             obj.put("msg", content);
             obj.put("readCount", readCount);
@@ -408,16 +406,20 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         log.info("소켓종료");
+        log.info("{}", rls);
+
         // 소켓 종료
         if (rls.size() > 0) { // 소켓이 종료되면 해당 세션값들을 찾아서 지운다.
             for (int i = 0; i < rls.size(); i++) {
+                /**
+                 * 만약 위에서 세션값을 설정 안해준다면 기존 세션값을 지우고 새 소켓을 만들 시 새로운 세션으로 시작.
+                 * obj.put(session.getId(),session);의 session.getId() 속성값을
+                 *  map의 session.getId() 속성값과  비교하였을때 서로 일치하는 세션값을 가진 obj를 제거함.
+                 */
                 rls.get(i).remove(session.getId()); // 세션값과 관련된 obj들을 제거함.
-                // 만약 위에서 세션값을 설정 안해준다면 기존 세션값을 지우고 새 소켓을 만들 시 새로운 세션으로 시작.
-                // obj.put(session.getId(),session);의 session.getId() 속성값을
-                // map의 session.getId() 속성값과  비교하였을때 서로 일치하는 세션값을 가진 obj를 제거함.
             }
         }
-        log.info("{}", rls);
+
         super.afterConnectionClosed(session, status);
     }
 
