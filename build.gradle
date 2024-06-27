@@ -48,7 +48,7 @@ dependencies {
     //2024-06-07, 이지훈 - rabbitMQ
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     //2024-06-27, 이지훈 - JPA (채팅 기록 검색 FULL TEXT INDEX)
-    //implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 
     //2024-05-27, 이지훈 - lombok

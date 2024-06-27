@@ -1,5 +1,6 @@
 package com.example.jhta_3team_finalproject.domain.chat;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -9,6 +10,8 @@ import java.util.Date;
 @ToString
 @Setter
 @Getter
+@Entity
+@Table(name = "chat_message")
 public class ChatMessage {
     /*
        2024-06-12
@@ -24,22 +27,30 @@ public class ChatMessage {
         ENTER, TALK, QUIT, KICK, EMERGENCY, TIMESTAMP
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long messageNum; // 메시지 번호
+    @Transient
     private MessageType type; // 메시지 타입
     private String messageContent; // 메시지 내용
     private int readCount; // 안 읽은 사람 수
     private Date sendTime; // 메시지 보낸 시간
+    @Transient
     private String timeStamp; // 채팅 타임스탬프
     private String senderId; // 보낸 회원의 아이디
     private long chatRoomNum; // 채팅방 번호
     private String fileUrl; // 파일이 저장된 업로드 S3 버킷 위치 (DB 저장)
     private String fileOriginName; // 파일의 원본 이름
+    @Transient
     private String s3url; // 업데이트할 S3 URL (업데이트용)
 
     /**
      * 2024-06-14, 확장 - 유저 이름, 유저 프로필 사진
      */
+    @Transient
     private String userId;
+    @Transient
     private String userName;
+    @Transient
     private String userProfilePicture;
 }
