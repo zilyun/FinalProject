@@ -110,9 +110,9 @@ MBTI 서비스의 목표는 다음과 같습니다.<br>
   <div>
       <h4>[Ngrinder]</h4>
       <span>Cache 미적용</span><br>
-      <img alt="미적용" src="https://github.com/zilyun/Final_Project/assets/40315922/4c713b8a-6f0e-41a8-9eff-048813461577"><br>
+      <img alt="미적용" src="https://github.com/zilyun/FinalProject-release/assets/40315922/5768609c-910a-4c59-b6c3-f3f9d46f3d95"><br>
       <span>Cache 적용</span><br>
-      <img alt="적용" src="https://github.com/zilyun/Final_Project/assets/40315922/3893c591-8fab-48e5-baed-519efe1ffd3e">
+      <img alt="적용" src="https://github.com/zilyun/FinalProject-release/assets/40315922/e8016646-fbf7-4ec8-81e6-ad37a530b9b1">
   </div>
   </details>
 
