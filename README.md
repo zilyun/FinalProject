@@ -65,16 +65,16 @@ MBTI 서비스의 목표는 다음과 같습니다.<br>
   <div>
       <h4>[Ngrinder]</h4>
       <span>Cache 미적용</span>
-      <img src="https://github.com/zilyun/Final_Project/assets/40315922/b2da3659-9498-4caa-b082-dbf88e68dbbe">
+          <img src="https://github.com/zilyun/FinalProject-release/assets/40315922/3cddc648-1543-4137-9d74-abda7d8cc8b6">
       <span>Cache 적용</span>
-      <img src="https://github.com/zilyun/Final_Project/assets/40315922/bc27e31a-37c9-452d-903a-9cee8b56e53e">
+          <img src="https://github.com/zilyun/FinalProject-release/assets/40315922/a65dcd7e-5c2b-4f32-9007-f2acffacf9c6">
   </div>
   <div>
       <h4>[Scouter]</h4>
       <span>Cache 미적용</span>
-      <img src="https://github.com/zilyun/Final_Project/assets/40315922/ebd08602-df42-4936-89be-8767645791e1">
+          <img src="(https://github.com/zilyun/FinalProject-release/assets/40315922/2eab1a0c-90bc-4d87-8106-ed38cf7c1b08">
       <span>Cache 적용</span>
-      <img src="https://github.com/zilyun/Final_Project/assets/40315922/d1d6c828-c932-4c78-910c-56b78430ab72">
+          <img src="https://github.com/zilyun/FinalProject-release/assets/40315922/21817654-8143-4986-ba55-ebf004637a1e">
   </div>
   </details>
 
@@ -84,7 +84,7 @@ MBTI 서비스의 목표는 다음과 같습니다.<br>
   <details>
   <summary>RabbitMQ의 메시지 브로커로 메시지를 비동기 처리하여 대규모 트래픽을 처리</summary>
       <h4>[RabbitMQ]</h4>
-      <img src="https://github.com/zilyun/Final_Project/assets/40315922/13a2cfdf-acae-4fc3-b1b8-5c2e5eaac56d">
+      <img src="https://github.com/zilyun/FinalProject-release/assets/40315922/9ca9d66d-2bad-4121-8156-c40f29a498a8">
   </details>
 
 ### 채팅방 실시간 알림 기능 구현 [[적용 코드]() / [설정 코드]()]
