@@ -157,14 +157,12 @@ MBTI 서비스의 목표는 다음과 같습니다.<br>
 
 ### 채팅방 - 긴급공지
 
-<img src="https://github.com/zilyun/FinalProject/assets/40315922/b1fbd48f-9d3f-4ad4-bce5-f3e349d56698" width="350" height="600"/>  <img src="https://github.com/zilyun/FinalProject/assets/40315922/a7e9dd23-ac41-4a84-9994-72f76b5db105" width="350" height="600"/> <img src="https://github.com/zilyun/FinalProject/assets/40315922/9590034b-f00a-4467-9427-9e3636a1cd7e" width="350" height="600"/> 
+<img src="https://github.com/zilyun/FinalProject/assets/40315922/b1fbd48f-9d3f-4ad4-bce5-f3e349d56698" width="350" height="600"/> <img src="https://github.com/zilyun/FinalProject/assets/40315922/a7e9dd23-ac41-4a84-9994-72f76b5db105" width="350" height="600"/> 
+<img src="https://github.com/zilyun/FinalProject/assets/40315922/9590034b-f00a-4467-9427-9e3636a1cd7e" width="350" height="600"/> 
 
 ### 채팅 UI
 
-<img src="https://github.com/zilyun/Final_Project/assets/40315922/4924e46e-365d-4ae9-8772-1e8650eebbbe" width="350" height="600"/> <img src="https://github.com/zilyun/Final_Project/assets/40315922/7fab4a61-f401-4800-97af-28d3c6d6624b" width="350" height="600"/> 
-![09 채팅UI](https://github.com/zilyun/FinalProject/assets/40315922/99d5c7bd-e30c-475f-b253-b9c8fdc1c1a8)
-![09 채팅UI-02](https://github.com/zilyun/FinalProject/assets/40315922/a5b6c87f-208a-4c01-a417-6d9dcb5c9160)
-
+<img src="https://github.com/zilyun/FinalProject/assets/40315922/99d5c7bd-e30c-475f-b253-b9c8fdc1c1a8" width="350" height="600"/> <img src="https://github.com/zilyun/FinalProject/assets/40315922/a5b6c87f-208a-4c01-a417-6d9dcb5c9160" width="350" height="600"/> 
 
 ### 채팅 기록 검색
 
