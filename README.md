@@ -40,11 +40,11 @@ MBTI 서비스의 목표는 다음과 같습니다.<br>
 
 ## 🗺️ 서버 구조
 
-![CICD](https://github.com/zilyun/Final_Project/assets/40315922/cd2532f4-a1df-440b-860a-792e963a53c4)
+![CICD](https://github.com/zilyun/FinalProject/assets/40315922/4e605ba1-456a-4a1b-a6d0-9817d4d19b0f)
 
 ## 💾 DB 구조
 
-![DB구조](https://github.com/zilyun/Final_Project/assets/40315922/61cb8933-8e20-41c8-b8bd-9c60da76f08f)
+![DB구조](https://github.com/zilyun/FinalProject/assets/40315922/8bef54f2-4d82-4fb0-a60f-ae41d4d7d937)
 
 ## 🔥 기술적 개선 및 고려
 
@@ -132,51 +132,55 @@ MBTI 서비스의 목표는 다음과 같습니다.<br>
 
 ### 사원 목록 & 사원 검색
 
-<img src="https://github.com/zilyun/Final_Project/assets/40315922/242ab80e-93b9-443f-8604-71941adbafaa" width="350" height="600"/> 
+<img src="https://github.com/zilyun/FinalProject/assets/40315922/3d6a7de2-5317-458b-bc12-dc130fc8811c" width="350" height="600"/> 
 
 ### 채팅방 목록
 
-<img src="https://github.com/zilyun/Final_Project/assets/40315922/18d3ffb5-d682-403f-83be-b6b76bd6dbea" width="350" height="600"/> <img src="https://github.com/zilyun/Final_Project/assets/40315922/0c898cc9-a210-4058-a477-9cc9be49d84d" width="350" height="600"/>
+<img src="https://github.com/zilyun/FinalProject/assets/40315922/b7278ec9-ff3a-46b8-8d5e-9251eff6aa07" width="350" height="600"/> <img src="https://github.com/zilyun/FinalProject/assets/40315922/fd798273-cea5-4d34-9767-d2a8120a2211" width="350" height="600"/>
 
 ### 채팅방 생성 - 1대1 채팅방
 
-<img src="https://github.com/zilyun/Final_Project/assets/40315922/c8380227-4445-4257-bbe2-bf68659226a0" width="350" height="600"/>  <img src="https://github.com/zilyun/Final_Project/assets/40315922/8cc33c01-ef52-4611-a284-dd7a2417dbd5" width="350" height="600"/> 
+<img src="https://github.com/zilyun/FinalProject/assets/40315922/ad4096c2-f378-4341-af95-a70b879fad76" width="350" height="600"/>  <img src="https://github.com/zilyun/FinalProject/assets/40315922/7fc68ffd-c68b-4060-bb9a-51aab995e6cc" width="350" height="600"/> 
 
 ### 채팅방 생성 - 그룹 채팅방
 
-<img src="https://github.com/zilyun/Final_Project/assets/40315922/b043aff7-2f5e-4b70-be43-40d75c21d65e" width="350" height="600"/>  <img src="https://github.com/zilyun/Final_Project/assets/40315922/7f31c4c9-f264-4344-8585-c4eb1350b1da" width="350" height="600"/> 
+<img src="https://github.com/zilyun/FinalProject/assets/40315922/eab0918f-390c-4a73-9021-2a61f13f8941" width="350" height="600"/>  <img src="https://github.com/zilyun/FinalProject/assets/40315922/bd7a29b4-8dde-4957-ab55-6a2c11705993" width="350" height="600"/> 
 
 ### 채팅방 - 이모티콘
 
-<img src="https://github.com/zilyun/Final_Project/assets/40315922/d752bd4b-edf7-45e9-afd4-6045b80db570" width="350" height="600"/>
+<img src="https://github.com/zilyun/FinalProject/assets/40315922/d0de7771-c4e8-47ad-9341-fbf935bb4e5b" width="350" height="600"/>
 
 ### 채팅방 - 파일전송
 
-<img src="https://github.com/zilyun/Final_Project/assets/40315922/07950189-4400-4f45-876c-da60259b7ba0" width="350" height="600"/>
+<img src="https://github.com/zilyun/FinalProject/assets/40315922/3f7186ce-16f4-43da-b3fb-8a3617a136f4" width="350" height="600"/>
+![07 파일전송]()
 
 ### 채팅방 - 긴급공지
 
-<img src="https://github.com/zilyun/Final_Project/assets/40315922/071cc8c4-2fb1-484b-b17b-002f4429a309" width="350" height="600"/>  <img src="https://github.com/zilyun/Final_Project/assets/40315922/95905233-2e24-4ed0-b1a0-3f06f1b771be" width="350" height="600"/> <img src="https://github.com/zilyun/Final_Project/assets/40315922/0564f937-2ab9-4697-953c-9e5a52d8efd2" width="350" height="600"/> 
+<img src="https://github.com/zilyun/FinalProject/assets/40315922/b1fbd48f-9d3f-4ad4-bce5-f3e349d56698" width="350" height="600"/>  <img src="https://github.com/zilyun/FinalProject/assets/40315922/a7e9dd23-ac41-4a84-9994-72f76b5db105" width="350" height="600"/> <img src="https://github.com/zilyun/FinalProject/assets/40315922/9590034b-f00a-4467-9427-9e3636a1cd7e" width="350" height="600"/> 
 
 ### 채팅 UI
 
 <img src="https://github.com/zilyun/Final_Project/assets/40315922/4924e46e-365d-4ae9-8772-1e8650eebbbe" width="350" height="600"/> <img src="https://github.com/zilyun/Final_Project/assets/40315922/7fab4a61-f401-4800-97af-28d3c6d6624b" width="350" height="600"/> 
+![09 채팅UI](https://github.com/zilyun/FinalProject/assets/40315922/99d5c7bd-e30c-475f-b253-b9c8fdc1c1a8)
+![09 채팅UI-02](https://github.com/zilyun/FinalProject/assets/40315922/a5b6c87f-208a-4c01-a417-6d9dcb5c9160)
+
 
 ### 채팅 기록 검색
 
-<img src="https://github.com/zilyun/Final_Project/assets/40315922/69daedf8-3ec7-4ece-9422-1a6cffc7c9a3" width="350" height="600"/> 
+<img src="https://github.com/zilyun/FinalProject/assets/40315922/7a24e48a-a24a-4117-8b5b-2b46d948799f" width="350" height="600"/> 
 
 ### 채팅 1일 데이터 불러오기
 
-<img src="https://github.com/zilyun/Final_Project/assets/40315922/d0b15a12-5303-4245-878b-8e0e567a8ec2" width="350" height="600"/> 
+<img src="https://github.com/zilyun/FinalProject/assets/40315922/868a8b9f-5ad7-4430-a9f4-0e79b5d40bf8" width="350" height="600"/> 
 
 ### 채팅방 메뉴
 
-<img src="https://github.com/zilyun/Final_Project/assets/40315922/4c2044c9-34fc-4bc0-a463-3f95ad8b3366" width="350" height="600"/> 
+<img src="https://github.com/zilyun/FinalProject/assets/40315922/664fc392-f912-48d3-bbc3-41b42ed928bb" width="350" height="600"/> 
 
 ### 채팅 인원 추가 & 삭제
 
-<img src="https://github.com/zilyun/Final_Project/assets/40315922/a31ec9ce-0b93-436f-b92c-8b8ba2213ec9" width="350" height="600"/> <img src="https://github.com/zilyun/Final_Project/assets/40315922/b221a359-99be-4196-b104-9ca331c01969" width="350" height="600"/> 
+<img src="https://github.com/zilyun/FinalProject/assets/40315922/0be8cf56-8b3e-445e-836a-aee1db165682" width="350" height="600"/> <img src="https://github.com/zilyun/FinalProject/assets/40315922/89f208a1-b546-44d3-8b24-770079fe537d" width="350" height="600"/> 
 
 ## 시연영상 🎥
 - [시연 영상 - 채팅](https://www.youtube.com/watch?v=6PVh-9BGTZ0)
