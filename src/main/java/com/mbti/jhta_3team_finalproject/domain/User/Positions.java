@@ -1,5 +1,0 @@
-package com.mbti.jhta_3team_finalproject.domain.User;
-
-public class Positions {
-
-}

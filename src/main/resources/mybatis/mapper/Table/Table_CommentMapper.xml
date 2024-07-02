@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- SQL 맵퍼 파일은 xml이기 때문에 제일 먼저 xml선언이 온다 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Mapper 인터페이스의 패키지명과 이름을 namespace로 설정한다. -->
+<mapper namespace="com.mbti.finalproject.mybatis.mapper.Table.TableCommentMapper">
+    <select id="getListCount" resultType="int">
+        select count(*)
+        from board_comment
+        where board_num = #{board_num}
+    </select>
+
+    <select id = "getCommentList" resultType = "BoardComment">
+        SELECT
+            subquery.*,
+            d.department_name,
+            p.position_name,
+            u.user_profile_picture,
+            u.user_name
+        FROM (
+                 SELECT *
+                 FROM board_comment
+                 WHERE board_num = #{board_num}
+                 ORDER BY comm_regdate DESC
+                     LIMIT #{start}, #{end}
+             ) AS subquery
+                 JOIN user u ON subquery.user_num = u.user_num
+                 JOIN user_departments d ON u.department_id = d.department_id
+                 JOIN user_positions p ON u.position_id = p.position_id
+    </select>
+
+    <insert id = "commentsInsert">
+        insert into board_comment(user_num, comm_content, board_num)
+        values(#{userNum}, #{commContent}, #{boardNum})
+    </insert>
+
+    <delete id = "commentsDelete">
+        delete 	from board_comment
+		where 	comm_num = #{num}
+    </delete>
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mbti.finalproject.mybatis.mapper.dashboard.DashBoardCalendarMapper">
+    <!--  남은기간 구하기/ 당일일자 구하기  -->
+    <select id="select">
+        select  user_name as username, cal_type as type,datediff(cal_end , DATE_FORMAT(now(), '%x-%m-%d')) as id, cal_title as title
+        from calendar
+        where cal_start &lt;= DATE_FORMAT(now(), '%x-%m-%d') and DATE_FORMAT(now(), '%x-%m-%d') &lt;= cal_end;
+    </select>
+
+
+
+
+</mapper>
