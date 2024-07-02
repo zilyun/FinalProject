@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mbti.jhta_3team_finalproject.mybatis.mapper.User.UserMapper">
+
+    <select id="getUserId" resultType="User">
+        SELECT *
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="departmentPositionInfo" resultType="User">
+        select (select user_departments.department_name
+                from user_departments
+                where department_id = #{department_id}) as departmentName,
+               (select user_positions.position_name
+                from user_positions
+                where position_id = #{position_id})     as positionName
+        from dual
+    </select>
+
+    <select id="getEmployee" resultType="User" parameterType="int">
+        SELECT u.*, d.department_name AS departmentName, p.position_name AS positionName
+        FROM user u
+                 JOIN user_departments d ON u.department_id = d.department_id
+                 JOIN user_positions p ON u.position_id = p.position_id
+        WHERE u.user_num = #{userNum}
+    </select>
+
+
+    <update id="userupdate">
+        UPDATE user
+        SET user_name            = #{userName},
+            user_email           = #{userEmail},
+            user_phone_number    = #{userPhoneNumber},
+            user_profile_picture = #{userProfilePicture}
+        WHERE user_num = #{userNum}
+    </update>
+
+    <!-- 사용자 정보 추가 -->
+    <insert id="insert">
+        insert into user
+        (user_num, user_id, user_password, user_email, user_name, user_phone_number, user_gender, user_profile_picture,
+         user_created_at, user_updated_at, user_auth)
+        values (#{userNum}, #{userId}, #{userPassword}, #{userEmail}, #{userName}, #{userPhoneNumber}, #{userGender},
+                #{userProfilePicture}, NOW(), NOW(), #{userAuth})
+    </insert>
+
+    <select id="getListCount" resultType="int">  <!-- 페이징 -->
+        select count(*) from user
+    </select>
+
+    <!-- 사용자 승인 및 부서, 직책 설정 -->
+    <update id="approveUserWithDepartmentAndPosition" parameterType="map">
+        UPDATE user
+        SET user_is_approved = 1,
+            department_id    = #{departmentId},
+            position_id      = #{positionId},
+            user_auth        = CASE
+                                   WHEN #{positionId} = 0 THEN 'ROLE_NEWBIE' -- 신입사원
+                                   WHEN #{positionId} = 1 THEN 'ROLE_MEMBER' -- 사원
+                                   WHEN #{positionId} = 2 THEN 'ROLE_TEAM' -- 팀장
+                                   WHEN #{positionId} = 3 THEN 'ROLE_HEAD' -- 부장
+                                   WHEN #{positionId} = 4 THEN 'ROLE_SUB_MASTER'-- 이사
+                                   WHEN #{positionId} = 5 THEN 'ROLE_MASTER' -- 대표
+                                   ELSE 'ROLE_NEWBIE' -- 기본값
+                END
+        WHERE user_num = #{userNum}
+    </update>
+
+    <!-- 사용자 거절 -->
+    <update id="rejectUser">
+        UPDATE user
+        SET user_is_approved = 2
+        WHERE user_num = #{userNum}
+    </update>
+
+    <select id="getUsersFilter" resultType="map">
+        select u.user_num,
+               u.user_name,
+               u.user_email,
+               user_gender,
+               u.user_phone_number,
+               u.user_created_at,
+               cast(u.user_is_approved as signed) as user_is_approved,
+               d.department_name,
+               p.position_name
+        from user u
+                 join user_departments d on u.department_id = d.department_id
+                 join user_positions p on u.position_id = p.position_id
+        where u.user_is_approved != 1
+        ORDER BY user_is_approved ASC ,u.user_num desc ;
+    </select>
+
+    <!-- 부서와 직급에 해당하는 인물넘버 검색-->
+    <select id="getUsersByDepartmentAndPosition" resultType="int" parameterType="map">
+        SELECT user_num
+        FROM user
+        WHERE department_id = #{departmentId}
+          AND position_id = #{positionId}
+    </select>
+
+    <!--부서에 소속한 인물 검색-->
+    <select id="getEmployeeListByDepartment" resultType="User">
+        SELECT *
+        FROM user
+        WHERE department_id = #{departmentId}
+    </select>
+
+    <select id="getUserByUserNo" resultType="User">
+        SELECT *
+        FROM user
+        WHERE user_num = #{userNo}
+    </select>
+
+    <update id="projectMemberUpdate">
+        UPDATE project_member
+        SET project_member_name = #{userName},
+            project_member_profile = #{userProfilePicture}
+        WHERE project_member_num = #{userNum}
+    </update>
+</mapper>

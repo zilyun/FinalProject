@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mbti.jhta_3team_finalproject.mybatis.mapper.Table.AnnounceBoardMapper">
+
+    <select id="getListCount" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM announce_board b
+        JOIN user u ON b.user_num = u.user_num
+        <if test="search_field != null and search_word != null and target_department == ''">
+            WHERE ${search_field} LIKE #{search_word}
+        </if>
+        <if test="search_field != null and search_word != null and target_department != ''">
+            WHERE ${search_field} LIKE #{search_word}
+            AND annboard_department = #{target_department}
+        </if>
+        <if test="search_field == null and search_word == null and target_department != ''">
+            WHERE annboard_department = #{target_department}
+        </if>
+    </select>
+
+
+    <select id="getBoardList" parameterType="map" resultType="com.mbti.jhta_3team_finalproject.domain.Board.AnnounceBoard">
+        SELECT *
+        FROM (SELECT (@rownum := @rownum + 1) AS rnum, b.*
+        FROM (SELECT announce_board.*, user.user_name
+        FROM announce_board
+        LEFT JOIN user
+        ON announce_board.user_num = user.user_num
+        <if test="search_field != null and search_word != null and target_department == ''">
+            WHERE ${search_field} LIKE #{search_word}
+        </if>
+        <if test="search_field != null and search_word != null and target_department != ''">
+            WHERE ${search_field} LIKE #{search_word}
+            AND annboard_department = #{target_department}
+        </if>
+        <if test="search_field == null and search_word == null and target_department != ''">
+            WHERE annboard_department = #{target_department}
+        </if>
+        ORDER BY annboard_fix desc, annboard_importance desc, annboard_date desc
+        ) b,
+        (SELECT @rownum := 0) r) temp
+        WHERE rnum BETWEEN #{start} AND #{end}
+    </select>
+
+    <insert id="insertBoard">
+        <selectKey resultType="int" order="BEFORE" keyProperty="annboardNum">
+            SELECT IFNULL(MAX(annboard_num), 0) + 1 FROM announce_board
+        </selectKey>
+        INSERT INTO announce_board
+        (annboard_num, user_num, annboard_title, annboard_content,
+        annboard_department, annboard_importance, annboard_fix, annboard_date)
+        VALUES
+        (#{annboardNum}, #{userNum}, #{annboardTitle}, #{annboardContent},
+        #{annboardDepartment}, #{annboardImportance}, #{annboardFix}, NOW())
+    </insert>
+
+    <update id="setReadCountUpdate">
+        UPDATE announce_board
+        SET annboard_readcount = annboard_readcount+ 1
+        WHERE annboard_num = #{number}
+    </update>
+
+    <select id="getDetail" resultType="AnnounceBoard">
+        SELECT announce_board.*, user.user_profile_picture, user_departments.department_name AS user_department, user.user_name, user_positions.position_name AS user_position
+        FROM announce_board
+                 LEFT JOIN user ON announce_board.user_num = user.user_num
+                 LEFT JOIN user_positions ON user.position_id = user_positions.position_id
+                 LEFT JOIN user_departments ON user.department_id = user_departments.department_id
+        WHERE announce_board.annboard_num = #{number}
+    </select>
+
+    <delete id="boardDelete">
+        DELETE FROM announce_board
+        WHERE annboard_num = #{annboardNum}
+	</delete>
+
+    <select id="getUserData" resultType="User">
+        SELECT
+            u.user_name,
+            u.user_profile_picture,
+            u.department_id,
+            u.position_id,
+            d.department_name AS departmentName,
+            p.position_name AS positionName,
+            CASE
+                WHEN v.announce_board_num IS NOT NULL THEN v.checked
+                ELSE 0
+                END AS viewCheck
+        FROM
+            user u
+                JOIN
+                    user_departments d ON u.department_id = d.department_id
+                JOIN
+                    user_positions p ON u.position_id = p.position_id
+                LEFT JOIN
+                    view_check v ON u.user_num = v.user_num AND v.announce_board_num = #{annboardNum}
+        WHERE
+            u.department_id != 0
+        AND u.position_id != 0
+        ORDER BY
+            u.position_id
+    </select>
+
+    <select id="getDepartment">
+        SELECT department_name
+        FROM user_departments
+        WHERE department_id != 0
+    </select>
+
+    <select id="targetDepartment">
+        SELECT annboard_department
+        FROM announce_board
+        WHERE annboard_num = #{annboardNum}
+    </select>
+
+    <select id="getMaxCheck">
+        SELECT  count(u.user_num)
+        FROM user u
+            LEFT JOIN user_departments d
+                      ON u.department_id = d.department_id
+        <if test="targetDepartment != 'ALL'">
+            WHERE d.department_name = #{targetDepartment}
+        </if>
+
+    </select>
+
+    <select id="checkedUserByDepartment">
+        SELECT COUNT(DISTINCT u.user_num) AS user_count
+        FROM user u
+                 INNER JOIN user_departments d ON u.department_id = d.department_id
+                 INNER JOIN view_check v ON u.user_num = v.user_num
+        <if test="targetDepartment != 'ALL'">
+            WHERE d.department_name = #{targetDepartment}
+            AND v.checked = 1
+        </if>
+        <if test="targetDepartment == 'ALL'">
+            WHERE v.checked = 1
+        </if>
+        AND v.announce_board_num = #{annboardNum}
+    </select>
+
+    <update id="downImportance">
+        UPDATE announce_board
+        SET annboard_importance = 1,
+            annboard_fix = 0
+        WHERE annboard_num = #{annboardNum}
+    </update>
+
+    <update id="doTopFix">
+        UPDATE announce_board
+        SET annboard_fix = 1,
+            annboard_request = 2
+        WHERE annboard_num = #{annboardNum}
+    </update>
+
+    <update id="topFixClear">
+        UPDATE announce_board
+        SET annboard_fix = 0
+        WHERE annboard_num = #{annboardNum}
+    </update>
+
+    <select id="searchFixAuth">
+        SELECT user_num
+        FROM user
+        WHERE user_auth LIKE '%MASTER%'
+           OR (user_auth = 'ROLE_HEAD' AND department_id = 2)
+    </select>
+
+    <update id="fixRequest">
+        UPDATE announce_board
+        SET annboard_request = 1
+        WHERE annboard_num = #{annboardNum}
+    </update>
+
+    <update id="requestRefuse">
+        UPDATE announce_board
+        SET annboard_request = 2
+        WHERE annboard_num = #{annboardNum}
+    </update>
+
+    <select id="getAllUserData">
+        SELECT user_num
+        FROM user
+        WHERE user_num != #{userNum}
+        <if test="departmentId != 0">
+            AND department_Id = #{departmentId}
+        </if>
+    </select>
+
+    <select id="getWriter">
+        SELECT user_name
+        FROM user
+        WHERE user_num = #{userNum}
+    </select>
+</mapper>
