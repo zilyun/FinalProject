@@ -6,7 +6,7 @@
 
 ---
 
-<img width="1000" alt="logo" src="https://github.com/zilyun/Final_Project/assets/40315922/e5f6b111-d665-4fa6-8680-5ff5408f0a13">
+<img width="1000" alt="logo" src="https://github.com/zilyun/FinalProject-release/assets/40315922/b3fb7906-08d8-41fa-a733-baddab3840ea">
 
 ---
 
